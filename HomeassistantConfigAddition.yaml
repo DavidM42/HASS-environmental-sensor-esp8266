@@ -1,0 +1,24 @@
+# Add this to your homeassistant configuration.yaml
+
+# MQTT Server for esp8266 sensors
+mqtt:
+  broker: 192.168.178.111  # CHANGE TO YOUR SERVER
+  port: 1883
+
+# various ESP8266 based environment sensors
+sensor:
+  - platform: mqtt
+    name: "Temperature"
+    state_topic: "hass/temperature"
+    qos: 1
+    unit_of_measurement: "ºC"
+  - platform: mqtt
+    name: "Humidity"
+    state_topic: "hass/humidity"
+    qos: 1
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "CO² concentration"
+    state_topic: "hass/co2"
+    qos: 1
+    unit_of_measurement: "ppm"

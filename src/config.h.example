@@ -1,0 +1,7 @@
+// wifi credentials
+const char* SSID =  "XXXXXXX";
+const char* WIFI_PASSWORD = "XXXXXX";
+
+// mqtt variables
+const char* mqtt_server = "192.168.1.111 or e.g. example.com";
+int mqtt_port = 1883;
