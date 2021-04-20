@@ -52,6 +52,9 @@ int leseCO2() {
   if (ppm == 410){
     Serial.println("CO2 was strange 410 value");
     return -1;
+  } else if(ppm == 5000) {
+    Serial.println("Returned max value of 5000");
+    return -1;
   }
 
   return ppm;                         // Response of MH-Z19 CO2 Sensors in ppm
@@ -159,12 +162,13 @@ void loop() {
   // sending of messages
   long now = millis();
   if (now - lastMsg > publish_rate_ms) {
-    lastMsg = now;
     readingCount++;
 
     // humidity and temperature
     float humidity = dht.readHumidity();
+    delay(2000);
     float temp = dht.readTemperature();  
+    delay(2000);
     if (isnan(humidity) || isnan(temp)) {
       Serial.println("DHT sensor could not be read out");
     } else {
@@ -186,6 +190,7 @@ void loop() {
     } else {
       Serial.println("Unable to read C02 value");
     }
+    lastMsg = now;
   }
 
   if (readingCount >= 2) {
