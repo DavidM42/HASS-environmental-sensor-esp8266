@@ -9,9 +9,10 @@
 #include <PubSubClient.h>
 
 #include <DHT.h>
-#define DHT11PIN D4
-#define DHT11TYPE DHT11
-DHT dht11(DHT11PIN, DHT11TYPE);
+#define DHTPIN D4
+// #define DHTTYPE DHT11 // cheaper DHT11 version like in wemos d1 mini DHT shield
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
 
 // credentials to wifi and mqtt in here
 #include "config.h"
@@ -39,7 +40,7 @@ int leseCO2() {
 
   Serial.println("Raw co2 responses ");
   Serial.println(response[0], HEX);
-  Serial.print(response[1], HEX);
+  Serial.println(response[1], HEX);
 
   if (response[0] != 0xFF) return -1;
   if (response[1] != 0x86) return -1;
@@ -115,7 +116,7 @@ void setup() {
   // serial ports and sensors
   Serial.begin(9600);
   co2Serial.begin(9600);
-  dht11.begin();
+  dht.begin();
 
   // network
   setupWifi();
@@ -162,10 +163,10 @@ void loop() {
     readingCount++;
 
     // humidity and temperature
-    float humidity = dht11.readHumidity(); 
-    float temp = dht11.readTemperature();  
+    float humidity = dht.readHumidity();
+    float temp = dht.readTemperature();  
     if (isnan(humidity) || isnan(temp)) {
-      Serial.println("DHT11 could not be read out");
+      Serial.println("DHT sensor could not be read out");
     } else {
       Serial.print("Humidity: ");
       Serial.println(humidity);
